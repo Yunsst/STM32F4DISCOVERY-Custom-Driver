@@ -119,6 +119,16 @@
 #define RCC_SPI5_CLK_DISABLE()				CLEAR_BIT(RCC->APB2ENR,RCC_APB2ENR_SPI5EN)
 #define RCC_SPI6_CLK_DISABLE()				CLEAR_BIT(RCC->APB2ENR,RCC_APB2ENR_SPI6EN)
 
+/*
+ * OTGFS Clock Macros
+ */
 
+#define RCC_OTGFS_CLK_ENABLE()				do{uint32_t temp = 0;\
+											SET_BIT(RCC->AHB2ENR,RCC_AHB2ENR_OTGFSEN);\
+											temp = READ_BIT(RCC->AHB2ENR,RCC_APB2ENR_SPI1EN);\
+											UNUSED(temp);\
+											}while(0)
+
+#define RCC_OTGFS_CLK_DISABLE()				CLEAR_BIT(RCC->AHB2ENR,RCC_AHB2ENR_OTGFSEN)
 
 #endif /* INC_RCC_H_ */
