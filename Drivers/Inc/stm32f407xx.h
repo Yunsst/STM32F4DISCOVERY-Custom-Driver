@@ -146,7 +146,7 @@ typedef enum
 
 
 /*
- * USB OTG Addresses
+ * USB OTG HS Addresses
  */
 #define USB_OTG_HS_BASE_ADDR			(AHB1_BASE_ADDR + 0x20000UL)
 
@@ -156,13 +156,14 @@ typedef enum
  */
 
 /*
- * USB OTG Addresses
+ * USB OTG FS Addresses
  */
 #define USB_OTG_FS_BASE_ADDR			(AHB2_BASE_ADDR 		+ 0x0000UL)
 
-#define USB_OTG_FS_CORE					(USB_OTG_FS_BASE_ADDR 	+ 0x0000UL)
-#define USB_OTG_FS_HOST					(USB_OTG_FS_BASE_ADDR 	+ 0x0400UL)
-#define USB_OTG_FS_DEVICE				(USB_OTG_FS_BASE_ADDR 	+ 0x0800UL)
+#define USB_OTG_FS_CORE_ADDR			(USB_OTG_FS_BASE_ADDR 	+ 0x0000UL)
+#define USB_OTG_FS_HOST_ADDR			(USB_OTG_FS_BASE_ADDR 	+ 0x0400UL)
+#define USB_OTG_FS_DEVICE_ADDR			(USB_OTG_FS_BASE_ADDR 	+ 0x0800UL)
+#define USB_OTG_FS_FIFO_ADDR			(USB_OTG_FS_BASE_ADDR 	+ 0x1000UL)
 
 /*
  * Peripheral Structure Definitions
@@ -386,6 +387,10 @@ typedef struct
 #define SPI5							((SPI_TypeDef_t   *)(SPI5_BASE_ADDR ) )
 #define SPI6							((SPI_TypeDef_t   *)(SPI6_BASE_ADDR ) )
 
+
+#define USB_OTG_CORE					((USB_OTG_GlobalTypeDef *)(USB_OTG_FS_CORE_ADDR))
+#define USB_OTG_HOST					(  (USB_OTG_HostTypeDef *)(USB_OTG_FS_HOST_ADDR))
+#define USB_OTG_DEVICE					((USB_OTG_DeviceTypeDef *)(USB_OTG_FS_Device_ADDR))
 /*
  * Bit Definitions
  *
@@ -460,8 +465,6 @@ typedef struct
 #define RCC_AHB2ENR_OTGFSEN_POS			(7U)
 #define RCC_AHB2ENR_OTGFSEN_MSK			(0x1 << RCC_AHB2ENR_OTGFSEN_POS)
 #define RCC_AHB2ENR_OTGFSEN				RCC_AHB2ENR_OTGFSEN_MSK
-
-
 
 #define SPI_SR_Busy						(7U)
 #define SPI_SR_TxE						(1U)
