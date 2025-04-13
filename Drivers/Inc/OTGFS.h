@@ -82,18 +82,24 @@
  * Bit Definitions
  */
 #define OTGFS_GAHBCFG_GINT			((uint32_t)(0x00000001))
-#define OTGFS_GAHBCFG_TXFELVL		((uint32_t)(0x00000040))
-#define OTGFS_GAHBCFG_PTXFELVL		((uint32_t)(0x00000080))
+#define OTGFS_GAHBCFG_TXFELVL		((uint32_t)(0x00000080))
+#define OTGFS_GAHBCFG_PTXFELVL		((uint32_t)(0x00000100))
 
-//#define OTGFS_GUSBCFG_TOCAL			((uint32_t)(0x00000001))
 
+#define OTGFS_GUSBCFG_TOCAL_7		((uint32_t)(0x00000007)) // TOCAL=7 1.75 bit
 #define OTGFS_GUSBCFG_SRPCAP		((uint32_t)(0x00000100))
 #define OTGFS_GUSBCFG_HNPCAP		((uint32_t)(0x00000200))
-//#define OTGFS_GUSBCFG_TRDT			((uint32_t)(0x00000001))
+#define OTGFS_GUSBCFG_TRDT_9		((uint32_t)(0x00002400)) // 168 MHz için 0x9 değeri
 
+#define OTGFS_GINTMSK_OTGINT		((uint32_t)(0x00000004))
+#define OTGFS_GINTMSK_MMISM			((uint32_t)(0x00000002))
+#define OTGFS_GINTMSK_REFLVLM		((uint32_t)(0x00000010))
 
 #define OTGFS_GCCFG_PWRDWN			((uint32_t)(0x00010000))   // Power Down
+#define OTGFS_GCCFG_VBUSASEN		((uint32_t)(0x00040000))
+#define OTGFS_GCCFG_VBUSBSEN		((uint32_t)(0x00080000))
 
+#define OTGFS_GINTSTS_CMOD			((uint32_t)(0x00000001))
 
 typedef struct
 {
@@ -102,6 +108,6 @@ typedef struct
 
 }OTGFS_CfgTypeDef_t;
 
-void OTGFS_Init(USB_OTG_GlobalTypeDef *OTGFSx,OTGFS_CfgTypeDef_t *OTGFS_ConfigStruct);
+void OTGFS_Init(OTGFS_CfgTypeDef_t *OTGFS_ConfigStruct);
 
 #endif /* INC_OTGFS_H_ */

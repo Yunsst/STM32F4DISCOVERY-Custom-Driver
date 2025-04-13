@@ -6,26 +6,46 @@
  */
 #include "OTGFS.h"
 
-void OTGFS_Init(USB_OTG_GlobalTypeDef *OTGFS_Core,OTGFS_CfgTypeDef_t *OTGFS_ConfigStruct){
-
-
-	OTGFS_Core->GCCFG |= OTGFS_GCCFG_PWRDWN; // USB PHY enable
+void OTGFS_Init(OTGFS_CfgTypeDef_t *OTGFS_ConfigStruct){
 
 	uint32_t temp = 0;
 
-	temp = OTGFS_Core->GAHBCFG;
-	temp |= (OTGFS_GAHBCFG_GINT) | (OTGFS_GAHBCFG_TXFELVL) | (OTGFS_GAHBCFG_PTXFELVL);
+	temp |= OTGFS_GCCFG_PWRDWN; // USB PHY enable
 
-	OTGFS_Core->GAHBCFG = temp;
+	USB_OTG_CORE->GCCFG= temp;
 
-	temp = OTGFS_Core->GUSBCFG;
+	temp = USB_OTG_CORE->GAHBCFG;
+	temp |= (OTGFS_GAHBCFG_GINT) | (OTGFS_GAHBCFG_TXFELVL) | (OTGFS_GAHBCFG_PTXFELVL) ;
 
-	temp |= (OTGFS_GUSBCFG_SRPCAP) | OTGFS_GUSBCFG_HNPCAP | (OTGFS_ConfigStruct->Mode);
-
-	OTGFS_Core->GUSBCFG |= 0x3U << 8U; // SRPCAP & HNPCAP == 1
-	OTGFS_Core->GUSBCFG |= 0x5U; // TOCAL = 5 (48 MHz için)
+	USB_OTG_CORE->GAHBCFG = temp;
 
 
+	temp = USB_OTG_CORE->GUSBCFG;
+	temp &= ~(0xFU << 10);
+	temp |= (OTGFS_GUSBCFG_SRPCAP) | OTGFS_GUSBCFG_HNPCAP | (OTGFS_ConfigStruct->Mode)|\
+			(OTGFS_GUSBCFG_TOCAL_7) | (OTGFS_GUSBCFG_TRDT_9);
+
+	USB_OTG_CORE->GUSBCFG = temp;
+
+
+	temp = USB_OTG_CORE->GINTMSK;
+	temp |= (OTGFS_GINTMSK_OTGINT) | (OTGFS_GINTMSK_MMISM) | (OTGFS_GINTMSK_REFLVLM);
+
+	USB_OTG_CORE->GINTMSK = temp;
+
+	temp = USB_OTG_CORE->GCCFG;
+	temp |= (OTGFS_GCCFG_VBUSASEN) | (OTGFS_GCCFG_VBUSBSEN);
+
+	USB_OTG_CORE->GCCFG = temp;
+
+	USB_OTG_CORE->GINTSTS &= ~(0xFFFFFFFF);
+	temp = USB_OTG_CORE->GINTSTS;
+
+	if (temp & OTGFS_GINTSTS_CMOD){
+		// Host
+	}else{
+		// Device
+	}
 }
 
 
