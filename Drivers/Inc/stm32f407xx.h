@@ -98,6 +98,8 @@ typedef enum
 #define I2C2_BASE_ADDR					(APB1_BASE_ADDR + 0x5800UL)
 #define I2C3_BASE_ADDR					(APB1_BASE_ADDR + 0x5C00UL)
 
+#define PWR_BASE_ADDR					(APB1_BASE_ADDR + 0x7000UL)
+
 
 /*
  * APB2 Peripherals Base Addresses
@@ -144,6 +146,7 @@ typedef enum
 #define CRC_BASE_ADDR					(AHB1_BASE_ADDR + 0x3000UL)
 #define RCC_BASE_ADDR					(AHB1_BASE_ADDR + 0x3800UL)
 
+#define FIR_BASE_ADDR					(AHB1_BASE_ADDR + 0x3C00UL)
 
 /*
  * USB OTG HS Addresses
@@ -250,6 +253,22 @@ typedef struct
 	__IO uint32_t I2SCFGR;
 	__IO uint32_t I2SPR;
 }SPI_TypeDef_t;
+
+typedef struct
+{
+	__IO uint32_t ACR;
+	__IO uint32_t KEYR;
+	__IO uint32_t OPTKEYR;
+	__IO uint32_t SR;
+	__IO uint32_t CR;
+	__IO uint32_t OPTCR;
+}FLASH_Typedef_t;
+
+typedef struct
+{
+	__IO uint32_t CR;
+	__IO uint32_t CSR;
+}PWR_Typedef_t;
 
 /**
   * @brief USB_OTG_Core_Registers
@@ -387,10 +406,13 @@ typedef struct
 #define SPI5							((SPI_TypeDef_t   *)(SPI5_BASE_ADDR ) )
 #define SPI6							((SPI_TypeDef_t   *)(SPI6_BASE_ADDR ) )
 
+#define FLASH							((FLASH_Typedef_t *)(FIR_BASE_ADDR  ) )
+
+#define PWR								( (PWR_Typedef_t  *)(PWR_BASE_ADDR  ) )
 
 #define USB_OTG_CORE					((USB_OTG_GlobalTypeDef *)(USB_OTG_FS_CORE_ADDR))
 #define USB_OTG_HOST					(  (USB_OTG_HostTypeDef *)(USB_OTG_FS_HOST_ADDR))
-#define USB_OTG_DEVICE					((USB_OTG_DeviceTypeDef *)(USB_OTG_FS_Device_ADDR))
+#define USB_OTG_DEVICE					((USB_OTG_DeviceTypeDef *)(USB_OTG_FS_DEVICE_ADDR))
 /*
  * Bit Definitions
  *
@@ -474,6 +496,23 @@ typedef struct
 #define SPI_CR1_DFF						(11U)
 
 #define SPI_CR2_TXEIE					(7U)
+
+/*
+ * FLASH Definitions
+ */
+
+#define FLASH_ACR_PRFTEN				((uint32_t)(0x00000100))
+#define FLASH_ACR_ICEN					((uint32_t)(0x00000200))
+#define FLASH_ACR_DCEN					((uint32_t)(0x00000400))
+
+#define FLASH_ACR_LATENCY_0WS			((uint32_t)(0x00000000))
+#define FLASH_ACR_LATENCY_1WS			((uint32_t)(0x00000001))
+#define FLASH_ACR_LATENCY_2WS			((uint32_t)(0x00000002))
+#define FLASH_ACR_LATENCY_3WS			((uint32_t)(0x00000003))
+#define FLASH_ACR_LATENCY_4WS			((uint32_t)(0x00000004))
+#define FLASH_ACR_LATENCY_5WS			((uint32_t)(0x00000005))
+#define FLASH_ACR_LATENCY_6WS			((uint32_t)(0x00000006))
+#define FLASH_ACR_LATENCY_7WS			((uint32_t)(0x00000007))
 
 
 /*
